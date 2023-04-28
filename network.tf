@@ -1,24 +1,3 @@
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 2.70"
-    }
-  }
-}
-
-provider "aws" {
-  region = "us-east-2"
-}
-
-resource "random_id" "server" {
-  byte_length = 4
-}
-
-data "http" "myip" {
-  url = "https://ifconfig.me/ip"
-}
-
 # # 1. Create vpc
 resource "aws_vpc" "dev-vpc" {
   cidr_block = "10.0.0.0/16"
@@ -133,34 +112,3 @@ resource "aws_eip" "one" {
   associate_with_private_ip = "10.0.1.50"
   depends_on                = [aws_internet_gateway.gw]
 }
-
-output "server_public_ip" {
-  value = aws_eip.one.public_ip
-}
-
-# # 9. Create Ubuntu server
-resource "aws_instance" "web-server-instance" {
-  ami               = "ami-06c4532923d4ba1ec" # Ubuntu 20.04
-  instance_type     = "t2.micro"
-  availability_zone = "us-east-2a"
-  key_name          = "arq-labs"
-
-  network_interface {
-    device_index         = 0
-    network_interface_id = aws_network_interface.web-server-nic.id
-  }
-
-  tags = {
-    Name = "web-server-${random_id.server.hex}"
-  }
-}
-
-output "server_private_ip" {
-  value = aws_instance.web-server-instance.private_ip
-
-}
-
-output "server_id" {
-  value = aws_instance.web-server-instance.id
-}
-

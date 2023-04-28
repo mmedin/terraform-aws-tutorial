@@ -1,5 +1,11 @@
 # terraform-aws-tutorial
 
+Basado en el tutorial que puede encontrarse en https://levelup.gitconnected.com/terraform-hello-world-b4985162cff2.
+
+He modificado algunas cosas para facilitar el uso de este material en clases. También incluyo a continuación algo de ayuda para jugar con Terraform aún cuando no se cuenta con la posibilidad de instalar le harraminta localmente. Se logra con Docker y la imagen oficial `hashicorp/terraform:light`.
+
+En caso de no poder instalar Docker, este código ha sido probado exitosamente en https://labs.play-with-docker.com/.
+
 ## Configuración previa
 
 Setear variables de entornos
